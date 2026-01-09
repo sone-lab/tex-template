@@ -6,17 +6,34 @@
 \subfile{sections/title}
 \newpage
 
+\gdef\MyChapterHead{目次}
 \tableofcontents
 \clearpage
 
+\DumpChapterNameCandidates
+\markboth{}{}
+\pagestyle{preport}
 \pagenumbering{arabic}
 
 \subfile{sections/abstract}
 \newpage
+\DumpChapterNameCandidates
 
 \subfile{sections/main_issue}
 \newpage
+\DumpChapterNameCandidates
+
+\subfile{sections/main_issue}
+\newpage
+\DumpChapterNameCandidates
 
 \subfile{sections/references}
+\DumpChapterNameCandidates
+\newpage
+
+\markboth{}{}
+
+\subfile{sections/acknowledgments}
+\DumpChapterNameCandidates
 
 \end{document}

@@ -8,12 +8,12 @@
 % 2カラム,A4,フォントサイズ9pt
 \LoadClass[
     paper=a4,
-    fontsize=11pt,
+    fontsize=10.5pt,
     disablejfam,
-    head_space=30mm,
-    foot_space=30mm,
-    gutter=25mm,
-    fore-edge=25mm,
+    head_space=35mm,
+    foot_space=40mm,
+    gutter=30mm,
+    fore-edge=30mm,
     linegap=1zw,
     report]
     {jlreq}
@@ -159,3 +159,67 @@
 
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{4}
+
+\setlength{\fboxsep}{4pt}   % 内側余白
+\setlength{\fboxrule}{0.1pt} % 線の太さ
+
+% ページスタイル：ヘッダ=「第N章 章題」（左上）、フッタ=ページ番号（下中央）
+\NewPageStyle{preport}{
+  running_head_position = top-left,
+  nombre_position       = bottom-center,
+  nombre                = \thepage,
+  odd_running_head      = \fbox{\makebox[\linewidth][c]{\MyChapterHead}},
+  even_running_head     = \fbox{\makebox[\linewidth][c]{\MyChapterHead}},
+  clear_markcommand     = false
+}
+
+
+% デフォルトのページスタイルをこれに変更
+\pagestyle{preport}
+
+% ヘッダ表示用の独自変数
+\newcommand{\MyChapterHead}{}
+
+\makeatletter
+\newcommand{\MyChapter}{%
+  \@ifstar{\MyChapter@star}{\MyChapter@nostar}%
+}
+\newcommand{\MyChapter@nostar}[1]{%
+  \chapter{#1}%
+  \gdef\MyChapterHead{第\thechapter 章\quad #1}%
+}
+\newcommand{\MyChapter@star}[1]{%
+  \chapter*{#1}%
+  \gdef\MyChapterHead{#1}%
+}
+
+\newcommand{\MyUnnumberedChapter}[1]{%
+  % 目次に追加
+%   \phantomsection
+  \addcontentsline{toc}{chapter}{#1}%
+  % ヘッダ用独自変数を更新
+  \gdef\MyChapterHead{#1}%
+
+  \MyChapter*{#1}%
+}
+
+
+\newcommand{\EchoChapterState}{%
+  \typeout{=== Chapter State (raw) ===}%
+  \typeout{thechapter = [\thechapter]}%
+  \typeout{leftmark  = [\leftmark]}%
+  \typeout{rightmark = [\rightmark]}%
+  \typeout{MyChapterHead = [\MyChapterHead]}%
+  \typeout{chapter counter = \the\value{chapter}}%
+  \typeout{=============================}%
+}
+\newcommand{\DumpChapterNameCandidates}{%
+  \typeout{=== Candidates ===}%
+  \typeout{thechapter=[\thechapter]}%
+  \typeout{leftmark=[\leftmark]}%
+  \typeout{rightmark=[\rightmark]}%
+  \typeout{@currentlabel=[\@currentlabel]}%
+  \typeout{@currentlabelname=[\@currentlabelname]}%
+  \typeout{==================}%
+}
+\makeatother
