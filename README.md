@@ -1,4 +1,4 @@
-# 繊維学部機械ロボット学科用、LaTeXテンプレート
+# LaTeXテンプレート
 
 [![License: CC0-1.0](https://img.shields.io/badge/License-CC0_1.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)
 
@@ -7,7 +7,8 @@
 
 TeXliveやcloud LaTeX, Overleaf等で使用できるLaTeXテンプレートです。
 upLaTeXとLuaLaTeXに対応しています
-レジュメ用、論文用のclsファイルが用意されており、.latexmkrcを使用してビルドを行います
+論文用のclsファイルが用意されており、.latexmkrcを使用してビルドを行います
+レジュメ用のテンプレートは書式が手に入ったら更新予定です
 
 ### VSCodeで運用する場合
 
