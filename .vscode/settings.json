@@ -71,5 +71,6 @@
         "-n"
     ],
     "editor.wordSeparators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?．。，、（）「」［］｛｝《》てにをはがのともへでや",
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "textlint.ignorePath": "/workdir/sections/title.tex, /workdir/README.md"
 }
