@@ -1,4 +1,4 @@
-\ProvidesClass{classes/report}[2023/02/20 report]
+\ProvidesClass{classes/thesis}[2026/01/15 thesis]
 
 % (u)pLaTeX非互換パッケージに対して互換させるパッチを読み込む命令
 \RequirePackage{plautopatch}
@@ -52,6 +52,7 @@
 
     % 図表関連のパッケージを読み込む
     \RequirePackage{graphicx}
+    \RequirePackage{xcolor}
 
     % ハイパーリンクを設定
     \RequirePackage[unicode,hidelinks,pdfusetitle]{hyperref}
@@ -68,7 +69,7 @@
         \DeclareFontShape{JT2}{hmc}{b}{n}{<->ssub*hmc/m/n}{}
 
         % 図表関連のパッケージを読み込む
-        \RequirePackage{color}
+        \RequirePackage[dvipdfmx]{xcolor}
         \RequirePackage[dvipdfmx]{graphicx}
 
         % ハイパーリンクを設定
@@ -136,26 +137,26 @@
 }
 
 % sectionのサイズを合わせる
-\RenewBlockHeading{chapter}{0}{lines=6,label_format={第\thechapter 章},font={\bfseries\Huge},after_label_space=1\jlreq@zw,second_heading_text_indent={-1\jlreq@zw,1\jlreq@zw},subtitle_font={\Large}}
-\RenewBlockHeading{section}{1}{font=\huge,after_label_space=1\jlreq@zw}
-\RenewBlockHeading{subsection}{2}{font=\LARGE,after_label_space=1\jlreq@zw}
-\RenewBlockHeading{subsubsection}{3}{font=\Large,after_label_space=1\jlreq@zw}
+\RenewBlockHeading{chapter}{0}{label_format={第\thechapter 章},font={\fontsize{12pt}{14pt}\selectfont},after_label_space=1\jlreq@zw,second_heading_text_indent={-1\jlreq@zw,1\jlreq@zw},subtitle_font={\fontsize{12pt}{14pt}\selectfont}}
+\RenewBlockHeading{section}{1}{font={\fontsize{10.5pt}{12.6pt}\selectfont},after_label_space=1\jlreq@zw}
+\RenewBlockHeading{subsection}{2}{font={\fontsize{10.5pt}{12.6pt}\selectfont},after_label_space=1\jlreq@zw}
+\RenewBlockHeading{subsubsection}{3}{font={\fontsize{10.5pt}{12.6pt}\selectfont},after_label_space=1\jlreq@zw}
 
 % セクション類の空白の設定
-\ModifyHeading{section}{before_space=30pt, after_space=30pt}
-\ModifyHeading{subsection}{before_space=20pt, after_space=20pt}
-\ModifyHeading{subsubsection}{before_space=15pt, after_space=15pt}
+% \ModifyHeading{section}{before_space=30pt, after_space=30pt}
+% \ModifyHeading{subsection}{before_space=20pt, after_space=20pt}
+% \ModifyHeading{subsubsection}{before_space=15pt, after_space=15pt}
 % セクションタイトルが一行以下なら下、２行以上なら上
 % \ModifyHeading{section}{lines=1}
 % \ModifyHeading{subsection}{lines=1}
 % \ModifyHeading{subsubsection}{lines=1}
 
 % セクションが連続する際の行取りを設定
-\SetBlockHeadingSpaces{
-    {_chapter{*},_section{before_space=0pt, after_space=15pt}},
-    {_section{*},_subsection{before_space=5pt, after_space=15pt}}
-    {_subsection{*},_subsubsection{before_space=5pt, after_space=15pt}}
-}
+% \SetBlockHeadingSpaces{
+%     {_chapter{*},_section{before_space=0pt, after_space=15pt}},
+%     {_section{*},_subsection{before_space=5pt, after_space=15pt}}
+%     {_subsection{*},_subsubsection{before_space=5pt, after_space=15pt}}
+% }
 
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{4}
@@ -163,13 +164,15 @@
 \setlength{\fboxsep}{4pt}   % 内側余白
 \setlength{\fboxrule}{0.1pt} % 線の太さ
 
+\definecolor{preportheading}{gray}{0.6} % ヘッダ枠と文字の色をやや薄めに設定
+
 % ページスタイル：ヘッダ=「第N章 章題」（左上）、フッタ=ページ番号（下中央）
 \NewPageStyle{preport}{
   running_head_position = top-left,
   nombre_position       = bottom-center,
   nombre                = \thepage,
-  odd_running_head      = \fbox{\makebox[\linewidth][c]{\MyChapterHead}},
-  even_running_head     = \fbox{\makebox[\linewidth][c]{\MyChapterHead}},
+  odd_running_head      = {\textcolor{preportheading}{\fbox{\makebox[\linewidth][c]{\MyChapterHead}}}},
+  even_running_head     = {\textcolor{preportheading}{\fbox{\makebox[\linewidth][c]{\MyChapterHead}}}},
   clear_markcommand     = false
 }
 

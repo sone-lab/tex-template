@@ -1,9 +1,12 @@
 \documentclass{classes/thesis}
 
+\usepackage{minted} % ソースコード表示の用パッケージ
+\setminted{frame=single, linenos=false} % mintedのグローバルオプション設定
+
 \begin{document}
 
 \pagenumbering{roman}
-\subfile{sections/title}
+\subfile{example/tex/title}
 \newpage
 
 \gdef \MyChapterHead{目次}
@@ -15,24 +18,13 @@
 
 % ========== 本文 ==========
 
-\subfile{sections/abstract}
-\newpage
-
-\subfile{sections/introduction}
-\newpage
-
-\subfile{sections/theory}
-\newpage
-
-\subfile{sections/conclusion}
+\subfile{example/tex/guide}
 \newpage
 
 % ========== 参考文献 ==========
 
 \subfile{sections/references}
 \newpage
-
-% ========== 謝辞 ==========
 
 \subfile{sections/acknowledgments}
 
