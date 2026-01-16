@@ -1,27 +1,14 @@
-%! TEX root = ../readme_report.tex
-\documentclass[../readme_report]{subfiles}
+%! TEX root = ../../readme_report.tex
+\documentclass[readme_report]{subfiles}
 
 \begin{document}
-
 \MyChapter{卒業論文を書くときの注意点}
 
 \section{卒業論文とは何か}
 
-卒業論文は，自分が行った研究を，第三者に正確に説明するための学術文書です．
-
-\begin{itemize}
-    \item 感想文やレポートではない
-    \item 「頑張った」「難しかった」などの主観的記述は不要である
-\end{itemize}
-
-読んだ人が以下を理解できることが重要である．
-
-\begin{itemize}
-    \item 何を目的に
-    \item 何をして
-    \item どんな結果が出て
-    \item それをどう解釈したのか
-\end{itemize}
+卒業論文は，自分が行った研究を，第三者に正確に説明するための学術文書である．
+従来の感想文やレポートとは異なり，主観的な記述は避け，客観的にかつ再現性 \footnote{あなたのことを知らない第三者がこの文章を読むだけで同じ実験を行えること}を重視した内容が求められる．
+このため，読んだ人がこの研究は何を目的に行われ，どのような方法で実施され，どのような結果が得られ，それをどのように解釈したのかを理解できるように書く必要がある．
 
 \section{論文全体の構成について}
 
@@ -30,417 +17,90 @@
 \subsection{構成の要素}
 
 \begin{enumerate}
-    \item \textbf{背景・目的}：なぜこの研究を行ったのか
+    \item \textbf{背景・目的}：なぜこの研究をしたのか
     \item \textbf{方法}：何を，どのように行ったのか
     \item \textbf{結果}：実験・解析で何が得られたのか
     \item \textbf{考察}：結果が何を意味するのか
     \item \textbf{結論}：研究として何が分かったのか
 \end{enumerate}
 
-章や節の順番は，「初めて読む人が迷わないか？」を基準に考える．
+章や節の順番は，ある程度の共通認識があるが，研究内容によっては構成が異なる場合もある．
+しかしながら，上記の要素が論理的に繋がるように注意することが重要である．
+
+論文の書き方については，たくさんの文献 \cite{cite:HuangLaiKangSi2019,cite:ShiHeiGui2012}があるので，参考にするとよい．
 
 \section{図・表・数式の使い方}
 
 \subsection{図・表について}
 
-図や表は本文中で必ず説明する．
+図や表は本文中で必ず説明する必要があり，文中では番号を使って参照する．
+この番号は手入力を行わない．\footnote{途中で図表の順番の入れ替え，追加，削除を行うことはよくあるため，自動的に番号が振られる仕組みを使わなければならない．自分はB4のときに酷い目にあった経験がある．}
+「下図に示す」のような表現は避け，「\Fig{fig:fig_example}に示すように」のように記述する．
+また，図や表は単体で見ても意味が分かるように作成する．
+軸の名前，単位，記号，凡例，その図の意味などをキャプションに記述する．
+そのためにキャプションが長くなっても構わない．
+これらのルールは，本来文章と図の位置関係は著者側に制御できず，印刷時に図が本文から離れてしまう可能性があるためである．
 
-\begin{itemize}
-    \item \textbf{NG：}「下図に示す」
-    \item \textbf{OK：} \Fig{fig:example}に示すように，\ldots
-\end{itemize}
-
-図や表は単体で見ても意味が分かるように作成する．以下を確認する．
-
-\begin{itemize}
-    \item 軸の名前
-    \item 単位
-    \item 記号の説明
-\end{itemize}
-
-「見た目がきれい」より「情報が正確」が重要である．
 
 \subsection{数式について}
 
-数式を出すときは，\textbf{なぜその式を使うのか}を文章で説明する．
-
-\begin{itemize}
-    \item いきなり式だけを出すのはNG
-    \item 数式も，本文中で番号を使って参照する
-\end{itemize}
-
-例えば，\Eq{eq:example}のような形式で参照する．
+数式を用いるときは，その数式の意味や役割を本文中で説明する．
+また，変数や記号の定義や単位系の説明も必要である．
+図表と同様に，数式も本文中で番号を使って参照する．
+例えば，\Eq{eq:eq_example}のような形式で参照する．
 
 \section{図の作成に関する注意}
 
-\begin{itemize}
-    \item ExcelやPowerPointで作った図を使っても構わない
-    \item ただし，\textbf{文字が小さすぎて読めない図はNG}である
-    \item 不要な色や装飾は避け，説明に必要な情報だけを残す
-    \item 図は「飾り」ではなく「説明のための道具」である
-\end{itemize}
+図は，研究の結果を効果的に伝えるための重要な要素である．
+この良し悪しが論文の評価を大きく左右することもある．
+
+図は，ExcelやPowerPointで作った図を使っても良いが，draw.ioやPythonなどのツールを用いても良い．
+特に，大規模なデータをエクセルで処理するのは非効率であり，PythonやRなどのプログラミング言語を用いることが推奨される．
+
+論文に用いる図は，基本的にベクタ形式のPDFやSVGで保存することが望ましい．
+ラスタ形式であるJPEGやPNGは，解像度が低くなりがちであり，印刷時にぼやけてしまう可能性があるためである．
+また，印刷時に拡大しなければ読めないような文字サイズは避け，余計な装飾や色使いも控える．
 
 \section{文章の書き方について}
 
-\begin{itemize}
-    \item 文体は \textbf{「だ・である調」}に統一する
-    \item 主語と述語が対応しているか，必ず見直す
-    \item 以下の表現は使いすぎないよう注意してください
-          \begin{itemize}
-              \item 「\(\sim \)と思われる」
-              \item 「\(\sim \)と考えられる」
-          \end{itemize}
-    \item 事実（結果）と考察（解釈）は，はっきり区別して書く
-    \item 箇条書きは便利であるが，多用せず，文章で説明することを基本とする
-\end{itemize}
+文章は，敬体（ですます調）ではなく，常体（である調）で書く．
+特によくある良くない例として，主語と述語の不一致がある，文章が長過ぎる，曖昧な表現が多い，などが挙げられる．
+「\(\sim \)と思われる」や「\(\sim \)と考えられる」などの表現は，客観性を欠くため，使用を避けるべきである．
+事実と考察は明確に区別し，箇条書きなできるだけ避け，文章で説明することが望ましい．
 
 \section{引用・参考文献について}
+\label{sec:citation}
 
-\begin{itemize}
-    \item 他人の研究成果や文章を使う場合は，\textbf{必ず引用}する
-    \item 図や表を参考にした場合も，出典を明記する
-    \item Webページも参考文献として記載が必要である
-    \item 「自分の結果」と「他人の成果」が混ざらないよう注意する
-\end{itemize}
+他人の著作物を使用する場合は，必ず引用を行う必要があり，これは「引用の要件」を満たす必要がある．
 
-本文中での引用例は，\cite{ref:example}のように記述する．
+\begin{itembox}[l]{引用の要件 \cite{cite:aca2024}}
+    \begin{itemize}
+        \item 公表された著作物であること(未公表の著作物は×)
+        \item 公正な慣行に合致すること(引用の「必然性」があること,引用する部分が「明確に区別」されること)
+        \item 引用の目的上「正当な範囲内」であること(自分の著作物と他人の著作物との間に妥当な「主従関係」があること, 引用する分量が必要最小限度の範囲内であること)
+        \item 「出所の明示」が必要
+    \end{itemize}
+\end{itembox}
+
+他人の著作物を引用し，引用の要件を満たしていない場合，盗用（剽窃）と見なされ，不正行為となる可能性がある \cite{cite:KanagawaUniversity2026a}．
+
+本文中での引用例は，\cite{cite:KanagawaUniversity2026a}のように記述する．
 
 \section{再現性を意識する}
 
-卒業論文では，\textbf{他人が同じことをすれば，同じ結果が出るか}が重要である．
-
-以下の情報は，省略せずに具体的に書く．
-
-\begin{itemize}
-    \item 実験条件
-    \item 使用した装置
-    \item パラメータ設定
-\end{itemize}
-
+卒業論文では，他人が同じことをすれば，同じ結果が出るかが重要である．
+ある研究を引き継ぎながら進めていく形式であるため，あとから見返す人（主に後輩）が同じ実験を再現できるように書く必要がある．
+このため，実験条件，使用した装置，パラメータ設定などを具体的に記述する．
 「一般的だから」「よく知られているから」と省略する場合は，どの文献や知識に基づくかを示す．
 
 \section{禁止事項・注意事項}
 
-\begin{itemize}
-    \item 他人の文章や図を，出典なしで使ってはいけない
-    \item コピー \&ペーストの多用は不正行為である
-    \item 生成AIを使った場合も，\textbf{内容の責任は自分にある}
-    \item 分からないことがあれば，\textbf{締切直前ではなく早めに相談}する
-\end{itemize}
-
-\section{\LaTeX での具体的な書き方}
-
-このテンプレートを使用する際の，具体的な記述方法を説明する．
-
-\subsection{図の挿入方法}
-
-図を挿入する際は，\texttt{figure}環境を使用する．
-
-\begin{equation}
-    \text{配置オプション} = \text{[htbp]}
-    \label{eq:placement}
-\end{equation}
-
-図のコード例を示します．
-
-\begin{minted}{latex}
-\begin{figure}[htbp]
- \centering
- \includegraphics[width=0.8 \linewidth]{figures/example.pdf}
- \caption{実験結果の例}
- \label{fig:example}
-\end{figure}
-\end{minted}
-
-\begin{itemize}
-    \item \texttt{[htbp]}は配置オプション（here, top, bottom, page）である
-    \item \texttt{width=\textbackslash linewidth}で図の幅を調整（例：\texttt{0.8 \textbackslash linewidth}）
-    \item \texttt{\textbackslash label \{fig:label \}}でラベルを付けると，本文中で参照できる
-    \item 図ファイルは \texttt{figures/}フォルダに配置する
-    \item PDFまたはPNG形式の図を推奨する（EPS形式も使用可能）
-\end{itemize}
-
-本文中での図の参照：
-
-\begin{minted}{latex}
-\Fig{fig:label}に示すように，...
-\end{minted}
-
-または
-
-\begin{minted}{latex}
-\Figure{fig:label}に示すように，...
-\end{minted}
-
-\begin{itemize}
-    \item \verb|\Fig{...}|は「Fig. 1」のように表示される
-    \item \verb|\Figure{...}|は「Figure 1」のように表示される
-\end{itemize}
-
-\subsection{表の挿入方法}
-
-表を挿入する際は，\texttt{table}環境を使用する．
-
-\begin{minted}{latex}
-\begin{table}[htbp]
- \centering
- \caption{実験条件}
- \label{tab:conditions}
- \begin{tabular}{lcc}
- \hline
- 項目 & 値 & 単位 \\
- \hline
- 温度 & 25 & \si{\celsius} \\
- 圧力 & 101.3 & \si{\kilo \pascal} \\
- \hline
- \end{tabular}
-\end{table}
-\end{minted}
-
-\begin{itemize}
-    \item \texttt{\textbackslash caption}は表の上に配置する（図の場合は下）
-    \item \texttt{\textbackslash hline}で横線を引く
-    \item 列の配置は \texttt{l}（左寄せ），\texttt{c}（中央），\texttt{r}（右寄せ）で指定する
-\end{itemize}
-
-本文中での表の参照：
-
-\begin{minted}{latex}
-\Table{tab:label}に示すように，...
-\end{minted}
-
-\subsection{数式の書き方}
-
-\subsubsection{インライン数式（文中の数式）}
-
-本文中に \verb|$E = mc^2$|のように記述する．
-
-\subsubsection{別行立て数式（番号付き）}
-
-別行立て数式では \texttt{equation}環境を使用する．
-
-本文中での式の参照：
-
-\begin{minted}{latex}
-\Eq{eq:label}より，...
-\end{minted}
-
-\verb|\Eq{...}|は「Eq. (1)」のように表示される．
-
-\subsubsection{複数行の数式}
-
-複数行の数式は \texttt{align}環境を使用する．
-
-\begin{align}
-    a & = b + c \\
-    d & = e + f
-\end{align}
-
-\subsection{参考文献の引用方法}
-
-このテンプレートでは \textbf{biblatex}を使用している．
-
-\subsubsection{文献情報の登録}
-
-\verb|references.bib|ファイルに文献情報を記述する．例を示す．
-
-本文中での引用：
-
-\begin{minted}{latex}
-先行研究 \cite{ref:yamada2020}によると，...
-\end{minted}
-
-複数の文献を同時に引用する場合：
-
-\begin{minted}{latex}
-これらの研究 \cite{ref:yamada2020, ref:tanaka2021}では，...
-\end{minted}
-
-\subsection{章・節の作成方法}
-
-このテンプレートでは，各章を個別のファイルに分けて記述する．
-
-\subsubsection{章の作成}
-
-\begin{minted}{latex}
-\MyChapter{章のタイトル}
-\end{minted}
-
-\begin{itemize}
-    \item 通常の \verb|\chapter{...}|の代わりに \verb|\MyChapter{...}|を使用する
-    \item ヘッダーに章タイトルが表示される
-\end{itemize}
-
-\subsubsection{節・小節の作成}
-
-\begin{itemize}
-    \item \texttt{\textbackslash section \{節のタイトル \}}を使用する
-    \item \texttt{\textbackslash subsection \{小節のタイトル \}}を使用する
-    \item \texttt{\textbackslash subsubsection \{小小節のタイトル \}}を使用する
-\end{itemize}
-
-\subsection{特殊な記号・単位の書き方}
-
-\subsubsection{単位の記述}
-
-このテンプレートには \texttt{siunitx}パッケージが含まれている．
-
-\begin{minted}{latex}
-温度は \SI{25}{\celsius}，速度は \SI{10}{\meter \per \second} である．
-\end{minted}
-
-\subsubsection{ベクトルの記述}
-
-\begin{minted}{latex}
-ベクトル $\bm{v}$ は...
-\end{minted}
-
-\subsection{textlintによる文章チェック}
-
-このテンプレートには，\textbf{textlint}による日本語文章の自動チェック機能が含まれている．
-
-\subsubsection{textlintとは}
-
-textlintは，文章の表記ゆれや誤字，日本語の文法的な問題を自動的にチェックするツールである．
-
-\begin{itemize}
-    \item 「ですます調」と「である調」の混在をチェック
-    \item 一文の長さや読点の位置をチェック
-    \item 冗長な表現や不適切な表記を検出
-    \item 技術文書に適した表現かどうかを検証
-\end{itemize}
-
-\subsubsection{textlintの実行方法}
-
-ターミナルで以下のコマンドを実行する．
-
-\begin{minted}{bash}
-# 初回のみ：textlintのインストール
-bash bin/install_textlint.sh
-
-# 文章のチェック実行
-bash bin/linter.sh
-\end{minted}
-
-\subsubsection{チェック結果の確認}
-
-textlintは，問題がある箇所を以下のように報告する．
-
-\begin{itemize}
-    \item ファイル名と行番号
-    \item 問題の種類（エラーまたは警告）
-    \item 具体的な修正提案
-\end{itemize}
-
-\subsubsection{注意点}
-
-\begin{itemize}
-    \item textlintの指摘は \textbf{あくまで参考}である
-    \item すべての指摘を修正する必要はない
-    \item 専門用語や意図的な表現は，無視して構わない
-    \item ただし，多くの指摘がある場合は，文章が読みにくい可能性がある
-\end{itemize}
-
-\subsection{latexindentによるコード整形}
-
-このテンプレートには，\textbf{latexindent}による \LaTeX ソースコードの自動整形機能が含まれている．
-
-\subsubsection{latexindentとは}
-
-latexindentは，\LaTeX のソースコードを読みやすく整形するツールである．
-
-\begin{itemize}
-    \item インデント（字下げ）を自動的に調整
-    \item 環境やブロックごとに適切な階層構造を整理
-    \item コードの可読性を向上
-    \item チーム開発時のコードスタイルの統一
-\end{itemize}
-
-\subsubsection{latexindentの実行方法}
-
-ターミナルで以下のコマンドを実行する．
-
-\begin{minted}{bash}
-# 特定のファイルを整形
-latexindent -w sections/introduction.tex
-
-# 全てのTeXファイルを一括整形
-bash bin/linter-tex-fmt.sh
-\end{minted}
-
-\begin{itemize}
-    \item \texttt{-w}オプションで，元のファイルを上書き保存する
-    \item 整形前のファイルは \texttt{backups/}フォルダにバックアップされる
-    \item \texttt{localSettings.yaml}でインデント幅などの設定をカスタマイズできる
-\end{itemize}
-
-\subsubsection{整形の例}
-
-整形前：
-
-\begin{minted}{latex}
-\begin{itemize}
-\item 項目1
-\item 項目2
-\begin{itemize}
-\item サブ項目
-\end{itemize}
-\end{itemize}
-\end{minted}
-
-整形後：
-
-\begin{minted}{latex}
-\begin{itemize}
- \item 項目1
- \item 項目2
- \begin{itemize}
- \item サブ項目
- \end{itemize}
-\end{itemize}
-\end{minted}
-
-\subsubsection{注意点}
-
-\begin{itemize}
-    \item 整形後は必ずコンパイルして，意図しない変更がないか確認する
-    \item 特殊な記述や意図的なレイアウトが崩れる場合がある
-    \item その場合は，\texttt{localSettings.yaml}で設定を調整するか，該当箇所を手動で修正する
-    \item Gitで管理している場合，整形前後の差分を確認することをお勧めする
-\end{itemize}
-
-\subsection{ファイル構成}
-
-以下のファイル構成になっている．
-
-\begin{itemize}
-    \item \texttt{main.tex}：メインファイル（全体の構成を記述）
-    \item \texttt{sections/}：各章のファイルを格納
-          \begin{itemize}
-              \item \texttt{title.tex}：タイトルページ
-              \item \texttt{abstract.tex}：概要
-              \item \texttt{introduction.tex}：序論
-              \item \texttt{theory.tex}：理論
-              \item \texttt{conclusion.tex}：結論
-              \item \texttt{references.tex}：参考文献
-              \item \texttt{acknowledgments.tex}：謝辞
-          \end{itemize}
-    \item \texttt{figures/}：図ファイルを格納
-    \item \texttt{references.bib}：参考文献データベース
-\end{itemize}
-
-各章のファイルは \verb|\subfile{sections/ファイル名}|で読み込まれる．
-
-\section{最後に}
-
-卒業論文は「完璧さ」よりも，以下が重要である．
-
-\begin{itemize}
-    \item 読み手に伝わるか
-    \item 論理の流れが通っているか
-    \item 根拠が示されているか
-\end{itemize}
-
-\textbf{「これを他人が読んで理解できるか？」}を常に意識しながら書く．
+\ref{sec:citation}で述べた通り，他人の文章や図を，出典なしで使ってはいけない．
+いわゆる「生成AI」と称されるLLM（大規模言語モデル）を使用することは厳密に禁止することはしないが，使用した責任は自分にあることを認識する必要がある．
+大学の規則 \cite{cite:ShenNaiChuanDaXue}をよく確認すること．
+特に研究の内容は機密情報であるため，LLMに入力してはならない．
+論文化や特許出願の妨げになる可能性があるためである．
+
+また，わからないことがあれば，締切直前ではなく早めに相談する \footnote{タイミングが悪いと締め切りまでに返事できなかったりします}こと．
 
 \end{document}

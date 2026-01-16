@@ -1,0 +1,391 @@
+%! TEX root = ../../readme_report.tex
+\documentclass[readme_report]{subfiles}
+
+\begin{document}
+\MyChapter{\LaTeX での具体的な書き方}
+
+このテンプレートを使用する際の，具体的な記述方法を説明する．
+これはあくまで一部の例であり，詳細は \LaTeX の参考書やオンラインドキュメントを参照されたい．
+
+\section{図の挿入方法}
+
+図を挿入する際は，\texttt{figure}環境を使用する．
+
+図のコード例を示す．
+
+\begin{minted}{latex}
+\begin{figure}[htbp]
+ \centering
+ \includegraphics[keepaspectratio, width=0.8 \linewidth]{figures}
+ \caption{caption}
+ \label{fig:label}
+\end{figure}
+\end{minted}
+
+一行ずつ解説する．
+
+\begin{minted}{latex}
+\begin{figure}[htbp]
+\end{figure}
+\end{minted}
+
+\LaTeX は，何かの構文を始めるときに \texttt{\textbackslash begin \{...\}} を使い，終わるときに \texttt{\textbackslash end \{...\}} を使う．
+この場合，\texttt{figure} 環境を開始および終了している．
+[htbp] は，図の配置に関するオプションである．
+here（ここ），top（ページの上部），bottom（ページの下部），page（専用のページ）を意味し，左から順に優先される．
+
+\begin{minted}{latex}
+ \centering
+\end{minted}
+このコマンドは，図を中央に配置するためのものである．
+
+\begin{minted}{latex} 
+ \includegraphics[keepaspectratio, width=0.8 \linewidth]{figures/example.pdf}
+\end{minted}
+このコマンドは，実際に図を挿入するためのコマンドであり，\texttt{figures/example.pdf} というファイルを挿入している．
+\texttt{width=0.8 \textbackslash linewidth} は，図の幅を本文の幅の \qty{80}{\percent} に設定することを意味している．
+\texttt{keepaspectratio} は，図の縦横比を維持するためのオプションである．
+
+\begin{minted}{latex}
+ \caption{caption}
+\end{minted}
+このコマンドは，図のキャプション（説明文）を設定するためのものである．
+キャプションは図の下に表示される．
+
+\begin{minted}{latex}
+ \label{fig:label}
+\end{minted}
+このコマンドは，図にラベルを付けるためのものである．
+ラベルを付けることで，本文中で図を参照することができる．
+
+図のファイルは \texttt{figures/} フォルダに配置すること．
+
+
+本文中での図の参照は以下のように行う．
+
+\begin{minted}{latex}
+\Fig{fig:label}に示すように，...
+\end{minted}
+
+\verb|\Fig{...}|は「Fig. 1」のように表示される
+
+\section{表の挿入方法}
+
+表を挿入する際は，\texttt{table}環境を使用する．
+
+\begin{minted}{latex}
+\begin{table}[htbp]
+ \centering
+ \caption{実験条件}
+ \label{tab:conditions}
+ \begin{tabular}{lcc}
+ \hline
+ 項目 & 値 & 単位 \\
+ \hline
+ 温度 & 25 & \si{\celsius} \\
+ 圧力 & 101.3 & \si{\kilo \pascal} \\
+ \hline
+ \end{tabular}
+\end{table}
+\end{minted}
+
+一行ずつ解説する．
+\begin{minted}{latex}
+\begin{table}[htbp]
+\end{table}
+\end{minted}
+
+\texttt{table}環境を開始および終了している．
+[htbp]は，図と同様に表の配置に関するオプションである．
+
+\begin{minted}{latex}
+ \centering
+\end{minted}
+このコマンドは，表を中央に配置するためのものである．
+
+\begin{minted}{latex}
+ \caption{実験条件}
+\end{minted}
+このコマンドは，表のキャプション（説明文）を設定するためのものである．
+キャプションは表の上に表示される．
+
+\begin{minted}{latex}
+ \label{tab:conditions}
+\end{minted}
+このコマンドは，表にラベルを付けるためのものである．
+ラベルを付けることで，本文中で表を参照することができる．
+
+\begin{minted}{latex}
+ \begin{tabular}{lcc}
+... \end{tabular}
+\end{minted}
+この部分が実際に表を作成する部分である．
+\texttt{tabular}環境を使用して表を作成する．
+\texttt{\{lcc \}}は，表の列の配置を指定している．
+ここでは，1列目が左寄せ（l），2列目と3列目が中央寄せ（c）であることを示している．
+表の内容は，行ごとに記述し，各セルは \texttt{\&}で区切る．
+行の終わりは
+
+\begin{minted}{latex}
+ \\
+\end{minted}
+で示す．
+
+実際に表を作成するときは，ずべて中央揃えで作成すること．
+また，web上で表を作成するツールがあるため，そちらを利用することも推奨する．
+
+
+\section{数式の書き方}
+
+\subsection{インライン数式（文中の数式）}
+
+本文中に \verb|$E = mc^2$|のように記述する．
+
+\subsection{別行立て数式（番号付き）}
+
+別行立て数式では \texttt{equation}環境を使用する．
+
+\begin{equation}
+    E = mc^2 \label{eq:einstein}
+\end{equation}
+
+本文中での式の参照：
+
+\begin{minted}{latex}
+\Eq{eq:einstein}より，...
+\end{minted}
+
+\verb|\Eq{...}|は「\Eq{eq:einstein}」のように表示される．
+
+\subsection{複数行の数式}
+
+複数行の数式は \texttt{align}環境を使用する．
+
+\begin{align}
+    a & = b + c \label{eq:first} \\
+    d & = e + f \label{eq:second}
+\end{align}
+
+\begin{minted}{latex}
+\begin{align}
+    a & = b + c \label{eq:first} \\
+    d & = e + f \label{eq:second}
+\end{align}
+\end{minted}
+
+複数行の数式でも，本文中での式の参照は、\Eq{eq:first}や\Eq{eq:second}のように行うことができる．
+
+
+\begin{comment}
+% TODO: ここまで
+
+\subsection{参考文献の引用方法}
+
+このテンプレートでは \textbf{biblatex}を使用している．
+
+\subsubsection{文献情報の登録}
+
+\verb|references.bib|ファイルに文献情報を記述する．例を示す．
+
+本文中での引用：
+
+\begin{minted}{latex}
+先行研究 \cite{ref:yamada2020}によると，...
+\end{minted}
+
+複数の文献を同時に引用する場合：
+
+\begin{minted}{latex}
+これらの研究 \cite{ref:yamada2020, ref:tanaka2021}では，...
+\end{minted}
+
+
+\subsection{章・節の作成方法}
+
+このテンプレートでは，各章を個別のファイルに分けて記述する．
+
+\subsubsection{章の作成}
+
+\begin{minted}{latex}
+\MyChapter{章のタイトル}
+\end{minted}
+
+\begin{itemize}
+    \item 通常の \verb|\chapter{...}|の代わりに \verb|\MyChapter{...}|を使用する
+    \item ヘッダーに章タイトルが表示される
+\end{itemize}
+
+\subsubsection{節・小節の作成}
+
+\begin{itemize}
+    \item \texttt{\textbackslash section \{節のタイトル \}}を使用する
+    \item \texttt{\textbackslash subsection \{小節のタイトル \}}を使用する
+    \item \texttt{\textbackslash subsubsection \{小小節のタイトル \}}を使用する
+\end{itemize}
+
+\subsection{特殊な記号・単位の書き方}
+
+\subsubsection{単位の記述}
+
+このテンプレートには \texttt{siunitx}パッケージが含まれている．
+
+\begin{minted}{latex}
+温度は \SI{25}{\celsius}，速度は \SI{10}{\meter \per \second} である．
+\end{minted}
+
+\subsubsection{ベクトルの記述}
+
+\begin{minted}{latex}
+ベクトル $\bm{v}$ は...
+\end{minted}
+
+\subsection{textlintによる文章チェック}
+
+このテンプレートには，\textbf{textlint}による日本語文章の自動チェック機能が含まれている．
+
+\subsubsection{textlintとは}
+
+textlintは，文章の表記ゆれや誤字，日本語の文法的な問題を自動的にチェックするツールである．
+
+\begin{itemize}
+    \item 「ですます調」と「である調」の混在をチェック
+    \item 一文の長さや読点の位置をチェック
+    \item 冗長な表現や不適切な表記を検出
+    \item 技術文書に適した表現かどうかを検証
+\end{itemize}
+
+\subsubsection{textlintの実行方法}
+
+ターミナルで以下のコマンドを実行する．
+
+\begin{minted}{bash}
+# 初回のみ：textlintのインストール
+bash bin/install_textlint.sh
+
+# 文章のチェック実行
+bash bin/linter.sh
+\end{minted}
+
+\subsubsection{チェック結果の確認}
+
+textlintは，問題がある箇所を以下のように報告する．
+
+\begin{itemize}
+    \item ファイル名と行番号
+    \item 問題の種類（エラーまたは警告）
+    \item 具体的な修正提案
+\end{itemize}
+
+\subsubsection{注意点}
+
+\begin{itemize}
+    \item textlintの指摘は \textbf{あくまで参考}である
+    \item すべての指摘を修正する必要はない
+    \item 専門用語や意図的な表現は，無視して構わない
+    \item ただし，多くの指摘がある場合は，文章が読みにくい可能性がある
+\end{itemize}
+
+\subsection{latexindentによるコード整形}
+
+このテンプレートには，\textbf{latexindent}による \LaTeX ソースコードの自動整形機能が含まれている．
+
+\subsubsection{latexindentとは}
+
+latexindentは，\LaTeX のソースコードを読みやすく整形するツールである．
+
+\begin{itemize}
+    \item インデント（字下げ）を自動的に調整
+    \item 環境やブロックごとに適切な階層構造を整理
+    \item コードの可読性を向上
+    \item チーム開発時のコードスタイルの統一
+\end{itemize}
+
+\subsubsection{latexindentの実行方法}
+
+ターミナルで以下のコマンドを実行する．
+
+\begin{minted}{bash}
+# 特定のファイルを整形
+latexindent -w sections/introduction.tex
+
+# 全てのTeXファイルを一括整形
+bash bin/linter-tex-fmt.sh
+\end{minted}
+
+\begin{itemize}
+    \item \texttt{-w}オプションで，元のファイルを上書き保存する
+    \item 整形前のファイルは \texttt{backups/}フォルダにバックアップされる
+    \item \texttt{localSettings.yaml}でインデント幅などの設定をカスタマイズできる
+\end{itemize}
+
+\subsubsection{整形の例}
+
+整形前：
+
+\begin{minted}{latex}
+\begin{itemize}
+\item 項目1
+\item 項目2
+\begin{itemize}
+\item サブ項目
+\end{itemize}
+\end{itemize}
+\end{minted}
+
+整形後：
+
+\begin{minted}{latex}
+\begin{itemize}
+ \item 項目1
+ \item 項目2
+ \begin{itemize}
+ \item サブ項目
+ \end{itemize}
+\end{itemize}
+\end{minted}
+
+\subsubsection{注意点}
+
+\begin{itemize}
+    \item 整形後は必ずコンパイルして，意図しない変更がないか確認する
+    \item 特殊な記述や意図的なレイアウトが崩れる場合がある
+    \item その場合は，\texttt{localSettings.yaml}で設定を調整するか，該当箇所を手動で修正する
+    \item Gitで管理している場合，整形前後の差分を確認することをお勧めする
+\end{itemize}
+
+\subsection{ファイル構成}
+
+以下のファイル構成になっている．
+
+\begin{itemize}
+    \item \texttt{main.tex}：メインファイル（全体の構成を記述）
+    \item \texttt{sections/}：各章のファイルを格納
+          \begin{itemize}
+              \item \texttt{title.tex}：タイトルページ
+              \item \texttt{abstract.tex}：概要
+              \item \texttt{introduction.tex}：序論
+              \item \texttt{theory.tex}：理論
+              \item \texttt{conclusion.tex}：結論
+              \item \texttt{references.tex}：参考文献
+              \item \texttt{acknowledgments.tex}：謝辞
+          \end{itemize}
+    \item \texttt{figures/}：図ファイルを格納
+    \item \texttt{references.bib}：参考文献データベース
+\end{itemize}
+
+各章のファイルは \verb|\subfile{sections/ファイル名}|で読み込まれる．
+
+\section{最後に}
+
+卒業論文は「完璧さ」よりも，以下が重要である．
+
+\begin{itemize}
+    \item 読み手に伝わるか
+    \item 論理の流れが通っているか
+    \item 根拠が示されているか
+\end{itemize}
+
+\textbf{「これを他人が読んで理解できるか？」}を常に意識しながら書く．
+\end{comment}
+
+\end{document}

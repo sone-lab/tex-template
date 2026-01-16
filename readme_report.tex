@@ -2,6 +2,8 @@
 
 \usepackage{minted} % ソースコード表示の用パッケージ
 \setminted{frame=single, linenos=false} % mintedのグローバルオプション設定
+\usepackage{ascmac} % 囲み枠
+\usepackage{comment}
 
 \begin{document}
 
@@ -18,14 +20,15 @@
 
 % ========== 本文 ==========
 
-\subfile{example/tex/guide}
+% \subfile{example/tex/guide}
+% \newpage
+
+\subfile{example/tex/how_to_write}
 \newpage
 
 % ========== 参考文献 ==========
 
 \subfile{sections/references}
 \newpage
-
-\subfile{sections/acknowledgments}
 
 \end{document}
