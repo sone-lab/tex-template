@@ -168,12 +168,10 @@
 
 % ページスタイル：ヘッダ=「第N章 章題」（左上）、フッタ=ページ番号（下中央）
 \NewPageStyle{preport}{
-  running_head_position = top-left,
+  running_head_position = top-center,
   nombre_position       = bottom-center,
   nombre                = \thepage,
   odd_running_head      = {\textcolor{preportheading}{\fbox{\makebox[\linewidth][c]{\MyChapterHead}}}},
-  even_running_head     = {\textcolor{preportheading}{\fbox{\makebox[\linewidth][c]{\MyChapterHead}}}},
-  clear_markcommand     = false
 }
 
 
