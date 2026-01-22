@@ -1,0 +1,77 @@
+\documentclass{classes/weekly_report}
+
+\title{
+	週報タイトル
+}
+
+\author{
+	氏名
+}
+
+\meetingdate{2025年1月23日} % ミーティングの日付を設定
+
+% -------------------------ここから-------------------------
+
+\begin{document} 
+\maketitle
+\thispagestyle{preport}
+
+% -------------------------ここまで触らない-------------------------
+
+\section{目的}
+今週の週報の目的について述べる．
+
+\section{今週やったこと}
+今週やったことについて述べる．
+
+\subsection{やったことその一}
+\label{sec:done1}
+まず，○○について述べる．
+
+\subsection{やったことその二}
+次に，△△について述べる．
+
+以下，\Fig{fig:fig1}にサンプルの図を示す．
+また，\Table{tab:sample}にサンプルの表を示す．
+さらに，\Eq{eq:label}にサンプルの数式を示す．
+
+節についての専用のコマンドは用意していないが，\ref{sec:done1}節のように参照できる．
+単位のある数字を記述するときは，\texttt{siunitx}パッケージを利用して，\qty{10}{\milli \meter}のように書くと良い．
+
+% 図の挿入
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{figures/dummy.pdf}
+    \caption{図の説明 \cite{ref:nomura2022uwb} \cite{ref:青空文庫Aozo22:online}}
+    \label{fig:fig1}
+\end{figure}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Sample Table}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        1 & 2 & 3 \\
+        \hline
+        4 & 5 & 6 \\
+        \hline
+        7 & 8 & 9 \\
+        \hline
+    \end{tabular}
+    \label{tab:sample}
+\end{table}
+
+\begin{equation}
+    \left( \int_{0}^\infty \frac{\sin x}{\sqrt {x}} dx \right)^{2}
+    = \sum_{k = 0}^\infty \frac{(2k)!}{2^{2k}(k!)^{2}} \frac{1}{2k + 1}
+    = \prod_{k = 1}^\infty \frac{4k^{2}}{4k^{2} - 1} = \frac{\pi}{2}
+    \label{eq:label}
+\end{equation}
+
+\section{まとめ}
+今週のまとめを述べる．
+
+\section{来週やること}
+来週やることを述べる．
+
+\end{document}
