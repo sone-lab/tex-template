@@ -23,29 +23,27 @@ docker imageとして、ghcr.io/being24/latex-docker を使用します
 
 ![demo](example/figures/screenshot.png)
 
-### Overleafで運用する場合
-
-* リポジトリごとzip形式にして各サービスにアップロードしてください
-* upLaTeXを使用する場合は、メニューのコンパイラをLaTeXに、LuaLaTeXを使用する場合はLuaLaTeXに変更してください
-
-### Cloud LaTeXで運用する場合
-
-* リポジトリごとzip形式にしてアップロードしてください
-* .latexmkrcを使用してビルドを行いますので、upLaTeXとLuaLaTeXの切り替えは.latexmkrcを編集してください
-
 ### git, GitHubとの連携
 
-データの消失や編集履歴の確認などのために、gitとGitHubを使用することをお勧めします
-このリポジトリはテンプレートリポジトリですので、Use this templateを使用して新しいリポジトリを作成してください
+提出時、githubにcommitするのを忘れないでください。
+また、週報用、論文用、レジュメ用でリポジトリを分けてください。
+あとでorgにまとめます。
 
 ## 使い方
 
-レジュメ、論文のテンプレートはそれぞれexampleディレクトリに格納されています。
+このリポジトリには、論文用、レジュメ用、週報用のテンプレートが含まれています
 
-レジュメを作成する場合は、resume_template.texをmain.texに上書きしてください
-論文を作成する場合は、thesis_template.texをmain.texに上書きしてください
+### 論文用テンプレート
 
-使い方やFAQはこの[記事](https://zenn.dev/being/articles/how-to-use-my-latex)にまとめています
+なんとなく既存のワードテンプレートに合わせた論文用のテンプレートです。（現在作成中）
+
+### レジュメ用テンプレート
+
+まだ何も手を付けていません。必要になるまでには作ります。
+
+### 週報用テンプレート
+
+完成しています。main.texにexample/tex/weekly_report.texをコピーして使用してください。サンプルの出力はexample/pdfにあります。
 
 
 ## License
