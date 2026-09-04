@@ -1,8 +1,11 @@
 name: Sync LaTeX Template Files
 on:
-  # schedule:
-    # - cron: '0 0 * * *'  # 毎日0時に実行
+  schedule:
+    - cron: "0 0 * * 6"  # 毎週土曜9時（JST）に実行
   workflow_dispatch:  # 手動実行用
+
+permissions:
+  contents: write
 
 jobs:
   sync:
@@ -15,22 +18,27 @@ jobs:
         run: |
           # classes ディレクトリ
           mkdir -p classes
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/classes/report.cls -o classes/report.cls
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/classes/resume.cls -o classes/resume.cls
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/classes/report.cls -o classes/report.cls
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/classes/resume.cls -o classes/resume.cls
 
           # 設定ファイル類
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/.latexmkrc -o .latexmkrc
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/.textlintrc -o .textlintrc
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/bibliography.bbx -o bibliography.bbx
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/localSettings.yaml -o localSettings.yaml
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.latexmkrc -o .latexmkrc
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.textlintrc -o .textlintrc
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/bibliography.bbx -o bibliography.bbx
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/localSettings.yaml -o localSettings.yaml
 
           # Node modules
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/package.json -o package.json
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/package-lock.json -o package-lock.json
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/package.json -o package.json
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/package-lock.json -o package-lock.json
+
+          # GitHub Actions
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.github/workflows/build.yml -o .github/workflows/build.yml
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.github/workflows/lint.yaml -o .github/workflows/lint.yaml
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.github/workflows/test.yml -o .github/workflows/test.yml
 
           # vscode configs
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/settings.json -o .vscode/settings.json
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/extensions.json -o .vscode/extensions.json
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/settings.json -o .vscode/settings.json
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/extensions.json -o .vscode/extensions.json
 
       - name: Commit and Push
         run: |
