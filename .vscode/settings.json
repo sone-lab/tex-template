@@ -49,7 +49,6 @@
         "*.toc",
         "*.bcf",
         "*.run.xml",
-        "*.bbl-SAVE-ERROR",
         //"*.log",
         //"*/*.log"
     ],
@@ -72,6 +71,5 @@
         "-n"
     ],
     "editor.wordSeparators": "./\\()\"'-:,.;<>~!@#$%^&*|+=[]{}`~?．。，、（）「」［］｛｝《》てにをはがのともへでや",
-    "editor.formatOnSave": false,
-    "textlint.ignorePath": "/workdir/sections/title.tex, /workdir/README.md"
+    "editor.formatOnSave": false
 }
