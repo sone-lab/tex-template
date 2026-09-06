@@ -7,7 +7,6 @@ on:
 permissions:
   contents: write
   pull-requests: write
-  workflows: write
 
 jobs:
   sync:
@@ -27,11 +26,6 @@ jobs:
           # Node modules
           curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/package.json -o package.json
           curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/package-lock.json -o package-lock.json
-
-          # GitHub Actions
-          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.github/workflows/build.yml -o .github/workflows/build.yml
-          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.github/workflows/lint.yaml -o .github/workflows/lint.yaml
-          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.github/workflows/test.yml -o .github/workflows/test.yml
 
           # vscode configs
           curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/settings.json -o .vscode/settings.json
