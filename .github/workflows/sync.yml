@@ -6,6 +6,8 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
+  workflows: write
 
 jobs:
   sync:
@@ -35,10 +37,23 @@ jobs:
           curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/settings.json -o .vscode/settings.json
           curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/extensions.json -o .vscode/extensions.json
 
-      - name: Commit and Push
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git diff --staged --quiet || git commit -m "🔄 Sync LaTeX template files from being24/latex-template-ja"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to sync"
+            exit 0
+          fi
+          BRANCH="sync/latex-template-$(date +%Y%m%d%H%M%S)"
+          git checkout -b "$BRANCH"
+          git commit -m "🔄 Sync LaTeX template files from being24/latex-template-ja"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "🔄 Sync LaTeX template files from being24/latex-template-ja" \
+            --body "upstream (being24/latex-template-ja) からの自動同期です。差分を確認してマージしてください。" \
+            --base master \
+            --head "$BRANCH"
