@@ -16,11 +16,6 @@ jobs:
 
       - name: Download Files
         run: |
-          # classes ディレクトリ
-          mkdir -p classes
-          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/classes/report.cls -o classes/report.cls
-          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/classes/resume.cls -o classes/resume.cls
-
           # 設定ファイル類
           curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.latexmkrc -o .latexmkrc
           curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.textlintrc -o .textlintrc
