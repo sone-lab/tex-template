@@ -19,7 +19,6 @@ jobs:
         run: |
           # 設定ファイル類
           curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.latexmkrc -o .latexmkrc
-          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.textlintrc -o .textlintrc
           curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/bibliography.bbx -o bibliography.bbx
           curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/localSettings.yaml -o localSettings.yaml
 
