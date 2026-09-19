@@ -69,11 +69,11 @@ latexmkrc: .latexmkrc
 
 .PHONY: lint
 lint:
-	npm run lint
+	npm run lint -- main.tex sections
 
 .PHONY: fix
 fix:
-	npm run fix
+	npm run fix -- main.tex sections
 
 branch=wip
 .PHONY: draft
