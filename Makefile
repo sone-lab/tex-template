@@ -1,5 +1,5 @@
-MAIN_SRC=main
-USE_DOCKER?=yes
+IN_CONTAINER=$(shell if test -f /.dockerenv || test -f /run/.containerenv || grep -Eq '(docker|containerd|kubepods|libpod)' /proc/1/cgroup 2>/dev/null; then echo yes; else echo no; fi)
+USE_DOCKER?=$(if $(filter yes,$(IN_CONTAINER)),no,yes)
 DOCKER_IMAGE=ghcr.io/being24/latex-docker
 
 # TeX sources
@@ -31,13 +31,19 @@ else
 	endif
 endif
 
-DOCKER_CMD=docker run --rm $(UIDOPT) -v $(CURDIR):/workdir $(DOCKER_IMAGE)
+DOCKER_CMD=docker run --rm $(UIDOPT) -v $(CURDIR):/workdir -w /workdir $(DOCKER_IMAGE)
 
 ifeq "$(USE_DOCKER)" "yes"
 	LATEXMK_CMD=$(DOCKER_CMD) latexmk
+	LATEXMKRC_CMD=$(DOCKER_CMD) cp /.latexmkrc ./
+	NPM_CMD=$(DOCKER_CMD) npm
+	CHECK_CMD=$(DOCKER_CMD) bash ./bin/check.sh
 	WATCH_OPTION=-pvc -view=none
 else
 	LATEXMK_CMD=latexmk
+	LATEXMKRC_CMD=cp /.latexmkrc ./
+	NPM_CMD=npm
+	CHECK_CMD=bash ./bin/check.sh
 	WATCH_OPTION=-pvc
 endif
 
@@ -47,33 +53,48 @@ endif
 all: clean pdf
 
 .PHONY: pdf
-pdf: $(MAIN_SRC).pdf
+pdf:
+ifndef FILE
+	$(error FILE is not set. Usage: make pdf FILE=<file without .tex extension>, e.g. make pdf FILE=main)
+endif
+	$(LATEXMK_CMD) $(FILE).tex
 
-$(MAIN_SRC).pdf: $(TEX_SRCS) $(STY_SRCS) $(BIB_SRCS) $(FIGS)
-	$(LATEXMK_CMD)
-
-target=$(MAIN_SRC).tex
 .PHONY: watch
 watch:
-	$(LATEXMK_CMD) $(WATCH_OPTION) $(target)
+ifndef FILE
+	$(error FILE is not set. Usage: make watch FILE=<file without .tex extension>, e.g. make watch FILE=main)
+endif
+	$(LATEXMK_CMD) $(WATCH_OPTION) $(FILE).tex
+
+.PHONY: check
+check:
+ifndef FILE
+	$(error FILE is not set. Usage: make check FILE=<file without .tex extension>, e.g. make check FILE=main)
+endif
+	$(CHECK_CMD) $(FILE)
 
 .PHONY: clean
 clean:
 	$(LATEXMK_CMD) -C $(TEX_SRCS)
+	rm -rf build-check
 
 .latexmkrc:
-	$(DOCKER_CMD) cp /.latexmkrc ./
+	$(LATEXMKRC_CMD)
 
 .PHONY: latexmkrc
 latexmkrc: .latexmkrc
 
 .PHONY: lint
 lint:
-	npm run lint -- main.tex sections
+	$(NPM_CMD) run lint -- main.tex sections
 
 .PHONY: fix
 fix:
-	npm run fix -- main.tex sections
+	$(NPM_CMD) run fix -- main.tex sections
+
+.PHONY: mcp
+mcp:
+	npm run mcp
 
 branch=wip
 .PHONY: draft

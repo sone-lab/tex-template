@@ -8,14 +8,19 @@
 		"vscode": {
 			"extensions": [
 				"James-Yu.latex-workshop",
-				"mhutchie.git-graph",
+				"mhutchie.git-graph"
 			]
 		}
 	},
+	"mounts": [
+		"source=${localEnv:HOME}/.codex,target=/home/ubuntu/.codex,type=bind",
+		"source=${localEnv:HOME}/.claude,target=/home/ubuntu/.claude,type=bind"
+	],
 	"workspaceMount": "source=${localWorkspaceFolder},target=/workdir,type=bind",
 	"workspaceFolder": "/workdir",
-	"postCreateCommand": "bash bin/install_textlint.sh",
-	"postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}"
+	"postCreateCommand": "timeout 180 npm ci || echo 'npm ci did not finish. Run npm ci later to use textlint.'",
+	"postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
+	"containerUser": "ubuntu"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
