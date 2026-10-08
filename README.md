@@ -31,6 +31,29 @@ docker imageとして、ghcr.io/being24/latex-docker を使用します
 
 ## 使い方
 
+### ビルドと textlint
+
+ホストでは `make pdf` が Docker の LaTeX 環境でビルドします。dev container 内では、同じコマンドが container 内の `latexmk` を直接実行します。
+
+```sh
+make pdf FILE=main
+make lint
+make fix
+```
+
+textlint は `main.tex` と `sections/` を対象にします。対象は引数で指定できます。
+
+```sh
+npm run lint -- main.tex sections
+npm run fix -- main.tex sections/abstract.tex
+```
+
+textlint の設定は共通パッケージ [being-textlint-ja-latex](https://github.com/being24/textlint-ja-latex) が持ちます。依存関係は `npm ci` で導入し、dev container では作成時に実行します。
+
+LLM 用の MCP server は、リポジトリのルートで `npm run mcp` を起動します。MCP は指定した `.tex` ファイルを lint します。
+
+### テンプレートの種類
+
 このリポジトリには、論文用、レジュメ用、週報用のテンプレートが含まれています
 
 ### 論文用テンプレート
@@ -45,6 +68,10 @@ docker imageとして、ghcr.io/being24/latex-docker を使用します
 
 完成しています。main.texにexample/tex/weekly_report.texをコピーして使用してください。サンプルの出力はexample/pdfにあります。
 
+
+### プレ卒研研究進捗報告書テンプレート
+
+`extern/`のWord様式を再現したテンプレートです（A4、原ノ味ゴシック）。`classes/progress_report.cls`を使い、記入例は`example/docs/progress_report.tex`にあります。
 
 ## License
 
