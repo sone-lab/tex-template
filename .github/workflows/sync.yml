@@ -1,8 +1,12 @@
 name: Sync LaTeX Template Files
 on:
-  # schedule:
-    # - cron: '0 0 * * *'  # 毎日0時に実行
+  schedule:
+    - cron: "0 0 * * 6"  # 毎週土曜9時（JST）に実行
   workflow_dispatch:  # 手動実行用
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   sync:
@@ -13,28 +17,36 @@ jobs:
 
       - name: Download Files
         run: |
-          # classes ディレクトリ
-          mkdir -p classes
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/classes/report.cls -o classes/report.cls
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/classes/resume.cls -o classes/resume.cls
-
           # 設定ファイル類
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/.latexmkrc -o .latexmkrc
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/bibliography.bbx -o bibliography.bbx
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/localSettings.yaml -o localSettings.yaml
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.latexmkrc -o .latexmkrc
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/bibliography.bbx -o bibliography.bbx
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/localSettings.yaml -o localSettings.yaml
 
           # Node modules
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/package.json -o package.json
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/package-lock.json -o package-lock.json
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/package.json -o package.json
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/package-lock.json -o package-lock.json
 
           # vscode configs
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/settings.json -o .vscode/settings.json
-          curl -L https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/extensions.json -o .vscode/extensions.json
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/settings.json -o .vscode/settings.json
+          curl -fL https://raw.githubusercontent.com/being24/latex-template-ja/master/.vscode/extensions.json -o .vscode/extensions.json
 
-      - name: Commit and Push
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
-          git diff --staged --quiet || git commit -m "🔄 Sync LaTeX template files from being24/latex-template-ja"
-          git push
+          if git diff --staged --quiet; then
+            echo "No changes to sync"
+            exit 0
+          fi
+          BRANCH="sync/latex-template-$(date +%Y%m%d%H%M%S)"
+          git checkout -b "$BRANCH"
+          git commit -m "🔄 Sync LaTeX template files from being24/latex-template-ja"
+          git push origin "$BRANCH"
+          gh pr create \
+            --title "🔄 Sync LaTeX template files from being24/latex-template-ja" \
+            --body "upstream (being24/latex-template-ja) からの自動同期です。差分を確認してマージしてください。" \
+            --base master \
+            --head "$BRANCH"
