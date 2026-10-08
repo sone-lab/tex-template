@@ -52,6 +52,15 @@ textlint の設定は共通パッケージ [being-textlint-ja-latex](https://git
 
 LLM 用の MCP server は、リポジトリのルートで `npm run mcp` を起動します。MCP は指定した `.tex` ファイルを lint します。
 
+### 参照チェック
+
+`make check FILE=main` は、未使用・未定義の参照を検出します。1件でもあれば終了コード 1 で終わります。
+
+- 文献: [checkcites](https://ctan.org/pkg/checkcites) が未使用の `.bib` エントリと未定義の `\cite` を報告します
+- ラベル: [refcheck](https://ctan.org/pkg/refcheck) が参照されていない `\label` を、LaTeX の警告が未定義の `\ref` を報告します
+
+チェック用のビルドは `build-check/` に出力するため、`main.pdf` は変わりません。biblatex を使う文書（論文用テンプレート）が対象で、`references.bib` のサンプル文献はテンプレートのままでは未使用として報告されます。
+
 ### テンプレートの種類
 
 このリポジトリには、論文用、レジュメ用、週報用のテンプレートが含まれています
