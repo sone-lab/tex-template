@@ -139,10 +139,26 @@
 \fi
 
 % ---------- 提出前チェック ----------
+% \prechecked{1,3}  : 1,3番目の項目を■にする (未指定ならすべて□)
+% \reviewer{氏名}   : 確認者
+% \reviewdate{...}   : 確認日 (未指定なら空欄の年月日)
+\makeatletter
+\newcommand{\prechecked}[1]{\gdef\@prechecked{,#1,}}
+\newcommand{\reviewer}[1]{\gdef\@reviewer{#1}}
+\newcommand{\reviewdate}[1]{\gdef\@reviewdate{#1}}
+\prechecked{}
+\reviewer{}
+\reviewdate{\hspace{2em}年\hspace{2em}月\hspace{2em}日}
+
+\newcommand{\@precheckitem}[2]{%
+    \def\@precheck@test##1{\in@{,#1,}{##1}}\expandafter\@precheck@test\expandafter{\@prechecked}%
+    \ifin@ ■\else □\fi #2}
+
 \newcommand{\makefooter}{%
     \par\noindent
     {\fboxsep=0pt
-    \fcolorbox{black}{reportblue}{\parbox[c][5.6mm][c]{\dimexpr\linewidth-2\fboxrule\relax}{\hspace*{1.4mm}\footnotesize{\bfseries 提出前チェック}\hspace{0.8em}□目的と実施内容が対応している\hspace{0.1em}□結果・気づきを記入した\hspace{0.1em}□次回課題に期限または完了条件がある\hspace{0.1em}□引用・参照元を示した}}}%
+    \fcolorbox{black}{reportblue}{\parbox[c][5.6mm][c]{\dimexpr\linewidth-2\fboxrule\relax}{\hspace*{1.4mm}\footnotesize{\bfseries 提出前チェック}\hspace{0.8em}\@precheckitem{1}{目的と実施内容が対応している}\hspace{0.1em}\@precheckitem{2}{結果・気づきを記入した}\hspace{0.1em}\@precheckitem{3}{次回課題に期限または完了条件がある}\hspace{0.1em}\@precheckitem{4}{引用・参照元を示した}}}}%
     \par\vspace{2mm}
-    \hfill 確認者：\hspace{10em}確認日：\hspace{2em}年\hspace{2em}月\hspace{2em}日
+    \hfill 確認者：\makebox[10em][l]{\@reviewer}確認日：\@reviewdate
 }
+\makeatother
