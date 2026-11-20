@@ -7,8 +7,8 @@
 
 TeXliveやcloud LaTeX, Overleaf等で使用できるLaTeXテンプレートです。
 upLaTeXとLuaLaTeXに対応しています
-論文用のclsファイルが用意されており、.latexmkrcを使用してビルドを行います
-レジュメ用のテンプレートは書式が手に入ったら更新予定です
+用途ごとのclsファイルが`classes/`に用意されており、.latexmkrcを使用してビルドを行います
+テンプレートの種類は[テンプレートの種類](#テンプレートの種類)を参照してください
 
 ### VSCodeで運用する場合
 
@@ -63,30 +63,93 @@ LLM 用の MCP server は、リポジトリのルートで `npm run mcp` を起�
 
 ### テンプレートの種類
 
-このリポジトリには、論文用、レジュメ用、週報用のテンプレートが含まれています
+このリポジトリには、5種類のテンプレートがあります。
+
+| 用途 | クラス | 記入例 | 状態 |
+|---|---|---|---|
+| 論文 | `classes/thesis.cls` | `main.tex`と`sections/` | 作成中 |
+| 週報 | `classes/weekly_report.cls` | `example/docs/weekly_report.tex` | 使用可 |
+| レジュメ | `classes/resume.cls` | `example/tex/resume_template.tex` | 例がビルドできない |
+| プレ卒研研究進捗報告書 | `classes/progress_report.cls` | `example/docs/progress_report.tex` | 使用可 |
+| 中間発表の予稿（中沢研用） | `classes/interim_presentation.cls` | `example/docs/interim_presentation.tex` | 使用可 |
+
+状態は記入例をDockerの環境でビルドできるかで判断しています（2026-11-20時点）。
+論文は`main.tex`のビルドで確認しました。
+
+記入例を`main.tex`にコピーして使います。
+論文は`main.tex`と`sections/`をそのまま使います。
+ビルドは`make pdf FILE=main`です。
+
+進捗報告書と予稿は、Wordの様式を再現したものです。
+再現元のdocxは`extern/`に置く運用ですが、`.gitignore`で除外しているため、リポジトリには入っていません。
 
 ### 論文用テンプレート
 
 なんとなく既存のワードテンプレートに合わせた論文用のテンプレートです。（現在作成中）
+`main.tex`が`sections/`の各ファイルを`\subfile`で読み込みます。
+各ファイルは`title`、`abstract`、`Introduction`、`theory`、`conclusion`、`references`、`acknowledgments`です。
+
+`thesis.cls`を使う記入例が`example/docs/readme_report.tex`にもあります。
+サンプルの出力は`example/pdf/readme_report.pdf`にあります。
 
 ### レジュメ用テンプレート
 
-まだ何も手を付けていません。必要になるまでには作ります。
+`classes/resume.cls`は、A4の2段組で、本文は9ptです。
+記入例は`example/tex/resume_template.tex`です。
+
+現状では、この例がビルドできません。
+例の末尾が`sections/references.tex`を読み込みますが、このファイルは論文用のクラスにしかないコマンド（`\MyUnnumberedChapter`）を使うためです。
 
 ### 週報用テンプレート
 
-完成しています。main.texにexample/tex/weekly_report.texをコピーして使用してください。サンプルの出力はexample/pdfにあります。
-
+完成しています。
+`example/docs/weekly_report.tex`を`main.tex`にコピーして使います。
+書き換えるのは、`\title`、`\author`、`\meetingdate`です。
+サンプルの出力は`example/pdf/weekly_report.pdf`にあります。
 
 ### プレ卒研研究進捗報告書テンプレート
 
-`extern/`のWord様式を再現したテンプレートです（A4、原ノ味ゴシック）。`classes/progress_report.cls`を使い、記入例は`example/docs/progress_report.tex`にあります。
+2026年度のプレ卒研研究進捗報告書（Word）を再現したテンプレートです。
+A4の1段組で、本文は9ptの原ノ味ゴシック、余白は上下12mmと左右13mmです。
+記入例は`example/docs/progress_report.tex`にあります。
+
+書き換える項目は次のとおりです。
+
+- 氏名などの項目：`\author`、`\studentid`、`\laboratory`、`\researchtheme`、`\advisor`
+- 日付と回：`\reportdate`、`\reportweek`、`\reportmode`
+- 提出前チェック：`\prechecked{1,3}`で1番目と3番目を■にします（未指定はすべて□）。確認者は`\reviewer`と`\reviewdate`で指定します。
+
+未指定の項目は原本どおり空欄になります。
+科目名の`\course`は、「2026年度 電気電子情報実験IV・V」が既定値です。
+
+本文の記入欄は`reportbox`環境で書きます。
+`\begin{reportbox}{見出し}{最小の高さ}`の形です。
+中身が短いときは指定した高さに、長いときは中身に合わせて伸びます。
+記入の目安は`\hint{}`で書きます。
 
 ### 中間発表用予稿テンプレート（中沢研用）
 
-`extern/`の予稿様式（中沢研用）を再現したテンプレートです（A4、2段組、余白20mm、本文10pt、行送り14pt）。`classes/interim_presentation.cls`を使い、記入例は`example/docs/interim_presentation.tex`にあります。研究室名は中沢研が既定値なので、`\title`・`\author`・`\studentid`を指定します。
+中沢研の予稿様式（Word）を再現したテンプレートです。
+A4の2段組で、余白は上下左右20mm、本文は10ptの原ノ味明朝、行送りは14ptです。
+見出しは10ptの原ノ味角ゴシック、タイトルは14pt、研究室名と氏名の行は12ptにしています。
+フォントは原本のMS明朝とMSゴシックの代わりに、原ノ味明朝と原ノ味角ゴシックを使います。
+記入例は`example/docs/interim_presentation.tex`です。
 
-文献は様式どおりの書式で出力されます。日本語の文献は`references.bib`に`langid = {japanese}`を付けると日本語の書式になり、付けないと英語の書式になります。雑誌論文（`@article`）のみ対象で、それ以外は他のテンプレートと同じ書式です。
+`\title`、`\author`、`\studentid`を指定します。
+研究室名の`\laboratory`は、「中沢研究室（中沢　吉博）」が既定値です。
+
+記入例には、原本の赤字（書式の注記と記入手順）が入っています。
+本文を書くときは、赤字の注記と、末尾の`akablock`環境（記入手順）を消します。
+赤字用の定義（`\akaji`、`akablock`、`\cs`、`\env`）も記入例の中にあるので、あわせて消してかまいません。
+
+表と図は、`table`環境（表説は表の上）と`figure`環境（図説は図の下）で書きます。
+原本が勧める「表と図を右側に寄せる」配置は、再現していません。
+表と図は、書いた位置に近い段の上に自動で置かれます。
+
+文献は`\printinterimbibliography`で出力します。
+書式は様式どおりです。
+日本語の文献は`references.bib`に`langid = {japanese}`を付けると日本語の書式になり、付けないと英語の書式になります。
+雑誌論文（`@article`）だけが対象で、ほかの種類は他のテンプレートと同じ書式です。
 
 ## License
 
