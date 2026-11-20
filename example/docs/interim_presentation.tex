@@ -1,9 +1,11 @@
 \documentclass{classes/interim_presentation}
 
-% 予稿様式（中沢研用）のWord原本の本文を再現した例。赤字はWord原本の赤字（書式の注記と記入手順）
+% 予稿様式（中沢研用）のWord原本の本文を再現した例。赤字は様式の注記と記入手順で、手順はWordの操作をLaTeXの書き方に読み替えている
 % 研究室名は中沢研の既定値が入っているので、他の場合だけ\laboratoryで指定する
 \newcommand{\akaji}[1]{\textcolor{red}{#1}}
 \newenvironment{akablock}{\par\color{red}\setlength{\parindent}{0pt}\setlength{\parskip}{.25\baselineskip}}{\par}
+\newcommand{\cs}[1]{\texttt{\textbackslash #1}}
+\newcommand{\env}[1]{\texttt{\textbackslash begin\{#1\}}}
 
 \title{タイトル\akaji{（原ノ味明朝、14pt）}}
 \author{神大\hspace{1\zw}太郎（202500000）\akaji{（原ノ味明朝、12pt）}}
@@ -14,7 +16,10 @@
 \section{はじめに\akaji{（原ノ味角ゴシック、10pt）}}
 \akaji{本文（原ノ味明朝、10pt）}
 
+% 見出しはWord原本の表記（読点「、」）のまま
+% textlint-disable
 \section{原理、方法\akaji{（内容がわかる章タイトルにする）}}
+% textlint-enable
 
 \section{結果}
 
@@ -22,6 +27,7 @@
 \begin{table}[t]
     \centering
     \caption{\akaji{表説（原ノ味明朝、本文10pt）}}
+    \label{tab:sample}
     \renewcommand{\arraystretch}{1.4}
     \begin{tabular}{|*{2}{p{.4\linewidth}|}}
         \hline
@@ -39,57 +45,71 @@
     \fbox{\parbox[c][25mm]{.7\linewidth}{\centering\vfill
         Visioの図\\Excel、Matlabのグラフや波形\\画像データ\vfill}}
     \caption{\akaji{図説（原ノ味明朝、本文10pt）}}
+    \label{fig:sample}
 \end{figure}
 
 \section{まとめ}
 
+% 記入手順（利用者が削除する説明文）はtextlintの対象外にする
+% textlint-disable
 \begin{akablock}
     【余白】\\
-    上下左右：20mm
+    上下左右：20mm（クラスで設定済み）
 
     【行間（2段組のところだけ）】\\
     行間：固定値\\
-    間隔：14pt
+    間隔：14pt（クラスで設定済み）
 
     【表の挿入】
     \begin{itemize}
-        \item 挿入タブの「表」から挿入し、表説を付ける。
-        \item 次に挿入タブにある「横書きテキストボックス」を挿入し、作成した表説と表をテキストボックス内にコピペする。
-        \item テキストボックスの枠線を「枠線なし」に設定。
+        \item \env{table}で表を作り，\cs{caption}で表説を付ける．
+        表説は表の上に置く．
+        \item 表は\env{tabular}で作る．
     \end{itemize}
-    ※Excelで作成した表を図として挿入しないこと。
+    ※Excelで作成した表を図として挿入しないこと．
 
     【図の挿入】
     \begin{itemize}
-        \item VisioやExcelの図は「拡張メタ」型式で貼り付け。
-        \item MATLABのグラフや波形は「SVG」形式で保存し、Wordの挿入＞画像でSVGファイルを貼り付け。
-        \item 画像データは「PNG 600dpi」型式で張り付け。
-        \item 貼り付け後、「レイアウトオプション＞文字列の折り返し」設定を「上下」に変更。
+        \item 図は\cs{includegraphics}で入れる．
+        図と図説は\env{figure}の中に置く．
+        図説は\cs{caption}で付け，図の下に置く．
+        \item VisioやExcelの図は，PDFなどのベクタ形式で書き出して\texttt{figures/}に置く．
+        \item MATLABのグラフや波形はSVG形式で保存する．
+        その後，\texttt{bin/svg2pdf.sh}を使ってPDFに変換する．
+        \item 画像データはPNG 600dpiで保存して使う．
     \end{itemize}
 
     【図説】
     \begin{itemize}
-        \item 図説は挿入タブの「横書きテキストボックス」を使う。
-        \item テキストボックスの書式設定は左余白、右余白、上余白、下余白を4つとも「0mm」に設定。
-        \item テキストボックスの枠線は「枠線なし」と塗りつぶしは「塗りつぶしなし」に設定。
-        \item テキストボックス内の文字は「中央揃え」に設定。
-        \item 図とテキストボックスを選択した状態で、右クリックし「グループ化」を選択。
+        \item 表説と図説は，10ptの原ノ味明朝で中央揃えになる．
+        「表1　」「図1　」の番号は自動で付く．
+        \item 図と図説をまとめる手作業（グループ化）は要らない．
     \end{itemize}
-    ※上記作業は面倒ですので、この様式の図説テキストボックスをコピーして、一番最後のグループ化だけすればいいです。
+
+    【番号と参照】
+    \begin{itemize}
+        \item 図表の番号は自動で付く．
+        本文からは\cs{label}と\cs{ref}を使って参照する．
+        \item 位置の固定（アンカー）に相当する設定は要らず，位置指定は\texttt{[t]}のままでよい．
+    \end{itemize}
 
     【レイアウト】
     \begin{itemize}
-        \item 表や図は文章中の適切なところに配置するのもいいですが、レイアウトを整えるのが大変なので、右側に右上から詰めて並べるのがおすすめです。左側は文章、右側は表や図をまとめるイメージです。右側すべて表や図になっても構いませんし、この様式のように表や図が少ない場合は右側に文章が一部あっても問題ないです。
-        \item 文献は右下。
+        \item 表や図は，\env{table}や\env{figure}を書いた位置に近い段の上に自動で配置される．
+        配置を変えたいときは，書く位置を前後にずらす．
+        \item 文献は\cs{printinterimbibliography}で末尾（右下）に出す．
     \end{itemize}
 
-    【アンカー】\\
-    \hspace*{1\zw}上記手順で作成した表や図を選択すると、アンカー（青い錨マーク）が現れる。アンカーをタイトル行に移動し、図のレイアウトオプション＞詳細表示＞オプションで「アンカーを段落に固定する」にチェックをつけると、アンカーに黄色い鍵マークが付く。
-
-    \hspace*{1\zw}アンカーを固定すれば、文章を書いている最中に表や図が勝手に移動せずに済む。
+    【文献】
+    \begin{itemize}
+        \item \texttt{references.bib}に書き，本文では\cs{cite}で引用する．
+        \item 日本語の文献には\texttt{langid = \{japanese\}}を付ける．
+        付けない文献は英語の書式になる．
+    \end{itemize}
 \end{akablock}
+% textlint-enable
 
-% 文献は日本語(langid={japanese})と英語の2形式。Word原本の例(1)(2)に対応する
+% 文献は日本語(langid={japanese})と英語の2形式
 \nocite{cite:ShiHeiGui2012,ref:ugarte1992curling}
 \printinterimbibliography
 \end{document}
