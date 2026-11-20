@@ -1,51 +1,95 @@
 \documentclass{classes/interim_presentation}
 
-% 予稿様式（中沢研用）。研究室名は中沢研の既定値が入っているので、他の場合だけ指定する
-\title{タイトル}
-\author{神大\hspace{1\zw}太郎}
-\studentid{202500000}
+% 予稿様式（中沢研用）のWord原本の本文を再現した例。赤字はWord原本の赤字（書式の注記と記入手順）
+% 研究室名は中沢研の既定値が入っているので、他の場合だけ\laboratoryで指定する
+\newcommand{\akaji}[1]{\textcolor{red}{#1}}
+\newenvironment{akablock}{\par\color{red}\setlength{\parindent}{0pt}\setlength{\parskip}{.25\baselineskip}}{\par}
+
+\title{タイトル\akaji{（MS明朝、14pt）}}
+\author{神大\hspace{1\zw}太郎（202500000）\akaji{（MS明朝、12pt）}}
 
 \begin{document}
 \maketitle
 
-\section{はじめに}
-本稿では，○○について述べる．
+\section{はじめに\akaji{（MSゴシック、10pt）}}
+\akaji{本文（MS明朝、10pt）}
 
-\section{原理、方法}
-内容がわかる章タイトルにする．
-\ref{eq:label}式に示すように，○○である~\cite{ref:ugarte1992curling}．
-\begin{equation}
-    E = m c^{2}
-    \label{eq:label}
-\end{equation}
+\section{原理、方法\akaji{（内容がわかる章タイトルにする）}}
 
 \section{結果}
-表\ref{tab:sample}と図\ref{fig:fig1}に示すように，○○である~\cite{cite:ShiHeiGui2012}．
 
 % 表説は表の上
-\begin{table}[htbp]
+\begin{table}[t]
     \centering
-    \caption{表説}
-    \label{tab:sample}
-    \begin{tabular}{|c|c|c|}
+    \caption{\akaji{表説（MS明朝、本文10pt）}}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{|*{2}{p{.4\linewidth}|}}
         \hline
-        1 & 2 & 3 \\
-        \hline
-        4 & 5 & 6 \\
-        \hline
+        & \\ \hline
+        & \\ \hline
+        & \\ \hline
+        & \\ \hline
+        & \\ \hline
     \end{tabular}
 \end{table}
 
 % 図説は図の下
-\begin{figure}[htbp]
+\begin{figure}[t]
     \centering
-    \includegraphics[width=.8\linewidth]{figures/dummy.pdf}
-    \caption{図説}
-    \label{fig:fig1}
+    \fbox{\parbox[c][25mm]{.7\linewidth}{\centering\vfill
+        Visioの図\\Excel、Matlabのグラフや波形\\画像データ\vfill}}
+    \caption{\akaji{図説（MS明朝、本文10pt）}}
 \end{figure}
 
 \section{まとめ}
-まとめとして，○○について述べた．
 
+\begin{akablock}
+    【余白】\\
+    上下左右：20mm
+
+    【行間（2段組のところだけ）】\\
+    行間：固定値\\
+    間隔：14pt
+
+    【表の挿入】
+    \begin{itemize}
+        \item 挿入タブの「表」から挿入し、表説を付ける。
+        \item 次に挿入タブにある「横書きテキストボックス」を挿入し、作成した表説と表をテキストボックス内にコピペする。
+        \item テキストボックスの枠線を「枠線なし」に設定。
+    \end{itemize}
+    ※Excelで作成した表を図として挿入しないこと。
+
+    【図の挿入】
+    \begin{itemize}
+        \item VisioやExcelの図は「拡張メタ」型式で貼り付け。
+        \item MATLABのグラフや波形は「SVG」形式で保存し、Wordの挿入＞画像でSVGファイルを貼り付け。
+        \item 画像データは「PNG 600dpi」型式で張り付け。
+        \item 貼り付け後、「レイアウトオプション＞文字列の折り返し」設定を「上下」に変更。
+    \end{itemize}
+
+    【図説】
+    \begin{itemize}
+        \item 図説は挿入タブの「横書きテキストボックス」を使う。
+        \item テキストボックスの書式設定は左余白、右余白、上余白、下余白を4つとも「0mm」に設定。
+        \item テキストボックスの枠線は「枠線なし」と塗りつぶしは「塗りつぶしなし」に設定。
+        \item テキストボックス内の文字は「中央揃え」に設定。
+        \item 図とテキストボックスを選択した状態で、右クリックし「グループ化」を選択。
+    \end{itemize}
+    ※上記作業は面倒ですので、この様式の図説テキストボックスをコピーして、一番最後のグループ化だけすればいいです。
+
+    【レイアウト】
+    \begin{itemize}
+        \item 表や図は文章中の適切なところに配置するのもいいですが、レイアウトを整えるのが大変なので、右側に右上から詰めて並べるのがおすすめです。左側は文章、右側は表や図をまとめるイメージです。右側すべて表や図になっても構いませんし、この様式のように表や図が少ない場合は右側に文章が一部あっても問題ないです。
+        \item 文献は右下。
+    \end{itemize}
+
+    【アンカー】\\
+    \hspace*{1\zw}上記手順で作成した表や図を選択すると、アンカー（青い錨マーク）が現れる。アンカーをタイトル行に移動し、図のレイアウトオプション＞詳細表示＞オプションで「アンカーを段落に固定する」にチェックをつけると、アンカーに黄色い鍵マークが付く。
+
+    \hspace*{1\zw}アンカーを固定すれば、文章を書いている最中に表や図が勝手に移動せずに済む。
+\end{akablock}
+
+% 文献は日本語(langid={japanese})と英語の2形式。Word原本の例(1)(2)に対応する
+\nocite{cite:ShiHeiGui2012,ref:ugarte1992curling}
 \printinterimbibliography
 \end{document}

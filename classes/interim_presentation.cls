@@ -39,6 +39,7 @@
     \RequirePackage[haranoaji,no-math,deluxe]{luatexja-preset}
 
     % 図表関連のパッケージを読み込む
+    \RequirePackage{xcolor}
     \RequirePackage{graphicx}
 
     % ハイパーリンクを設定
@@ -56,7 +57,7 @@
         \DeclareFontShape{JT2}{hmc}{b}{n}{<->ssub*hmc/m/n}{}
 
         % 図表関連のパッケージを読み込む
-        \RequirePackage{color}
+        \RequirePackage[dvipdfmx]{xcolor}
         \RequirePackage[dvipdfmx]{graphicx}
 
         % ハイパーリンクを設定
