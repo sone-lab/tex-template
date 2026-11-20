@@ -1,0 +1,51 @@
+\documentclass{classes/interim_presentation}
+
+% 予稿様式（中沢研用）。研究室名は中沢研の既定値が入っているので、他の場合だけ指定する
+\title{タイトル}
+\author{神大\hspace{1\zw}太郎}
+\studentid{202500000}
+
+\begin{document}
+\maketitle
+
+\section{はじめに}
+本稿では，○○について述べる．
+
+\section{原理、方法}
+内容がわかる章タイトルにする．
+\ref{eq:label}式に示すように，○○である~\cite{ref:ugarte1992curling}．
+\begin{equation}
+    E = m c^{2}
+    \label{eq:label}
+\end{equation}
+
+\section{結果}
+表\ref{tab:sample}と図\ref{fig:fig1}に示すように，○○である~\cite{cite:ShiHeiGui2012}．
+
+% 表説は表の上
+\begin{table}[htbp]
+    \centering
+    \caption{表説}
+    \label{tab:sample}
+    \begin{tabular}{|c|c|c|}
+        \hline
+        1 & 2 & 3 \\
+        \hline
+        4 & 5 & 6 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+% 図説は図の下
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=.8\linewidth]{figures/dummy.pdf}
+    \caption{図説}
+    \label{fig:fig1}
+\end{figure}
+
+\section{まとめ}
+まとめとして，○○について述べた．
+
+\printinterimbibliography
+\end{document}

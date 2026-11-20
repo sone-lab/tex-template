@@ -82,6 +82,12 @@ LLM 用の MCP server は、リポジトリのルートで `npm run mcp` を起�
 
 `extern/`のWord様式を再現したテンプレートです（A4、原ノ味ゴシック）。`classes/progress_report.cls`を使い、記入例は`example/docs/progress_report.tex`にあります。
 
+### 中間発表用予稿テンプレート（中沢研用）
+
+`extern/`の予稿様式（中沢研用）を再現したテンプレートです（A4、2段組、余白20mm、本文10pt、行送り14pt）。`classes/interim_presentation.cls`を使い、記入例は`example/docs/interim_presentation.tex`にあります。研究室名は中沢研が既定値なので、`\title`・`\author`・`\studentid`を指定します。
+
+文献は様式どおりの書式で出力されます。日本語の文献は`references.bib`に`langid = {japanese}`を付けると日本語の書式になり、付けないと英語の書式になります。雑誌論文（`@article`）のみ対象で、それ以外は他のテンプレートと同じ書式です。
+
 ## License
 
 CC0
