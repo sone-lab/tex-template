@@ -69,14 +69,34 @@
     \fi
 \fi
 
-% 文献は番号「(1)」で、7pt・行送り12pt・ぶら下げ5mm(原本どおり)
-\RequirePackage[bibstyle=bibliography,sorting=none,date=year,isbn=false,doi,giveninits,urldate=iso,seconds]{biblatex}
+% 文献は番号「(1)」(本文の引用は右肩の「(1)」)で、7pt・行送り12pt・ぶら下げ5mm(原本どおり)
+\RequirePackage[bibstyle=bibliography,citestyle=numeric-comp,sorting=none,date=year,isbn=false,doi,giveninits,urldate=iso,seconds]{biblatex}
 \addbibresource{references.bib}
 \DeclareFieldFormat{labelnumberwidth}{\makebox[\labelnumberwidth][l]{\mkbibparens{#1}}}
 \renewcommand*{\bibfont}{\fontsize{7pt}{12pt}\selectfont}
 \setlength{\labelnumberwidth}{5mm}
 \setlength{\bibitemsep}{0pt}
 \setlength{\bibhang}{0pt}
+
+% 本文の引用は右肩の両かっこ。番号ごとに「(1)」を付け、3件以上の連番は「(1)～(3)」にまとめる
+\renewbibmacro*{cite:print:labelnumber}{%
+    \printtext[bibhyperref]{(\printfield{labelprefix}\printfield{labelnumber})}}
+\renewbibmacro*{cite:print:last:labelnumber}{%
+    \printtext[bibhyperref:lastkey]{%
+        (\ifdef\cbx@lastprefix
+            {\printtext[labelprefix]{\cbx@lastprefix}}
+            {}%
+        \printtext[labelnumber]{\cbx@lastnumber})}}
+\DeclareCiteCommand{\cite}[\mkbibsuperscript]
+    {\usebibmacro{cite:init}%
+    \usebibmacro{prenote}}
+    {\usebibmacro{citeindex}%
+    \usebibmacro{cite:comp}}
+    {}
+    {\usebibmacro{cite:dump}%
+    \usebibmacro{postnote}}
+\renewcommand*{\multicitedelim}{\addcomma}
+\renewcommand*{\multiciterangedelim}{～}
 
 % 「文　献」の見出し(10pt・中央揃え)と、その下の罫線
 \defbibheading{interim}{%
