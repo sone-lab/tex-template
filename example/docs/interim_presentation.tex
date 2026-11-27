@@ -15,6 +15,8 @@
 
 \section{はじめに\akaji{（原ノ味角ゴシック、10pt）}}
 \akaji{本文（原ノ味明朝、10pt）}
+文献の引用例\cite{cite:ShiHeiGui2012}．
+複数の引用例\cite{cite:ShiHeiGui2012,ref:ugarte1992curling}．
 
 % 見出しはWord原本の表記（読点「、」）のまま
 % textlint-disable
@@ -103,6 +105,7 @@
     【文献】
     \begin{itemize}
         \item \texttt{references.bib}に書き，本文では\cs{cite}で引用する．
+        番号は右肩に「(1)」の形で付く．
         \item 日本語の文献には\texttt{langid = \{japanese\}}を付ける．
         付けない文献は英語の書式になる．
     \end{itemize}
@@ -110,6 +113,5 @@
 % textlint-enable
 
 % 文献は日本語(langid={japanese})と英語の2形式
-\nocite{cite:ShiHeiGui2012,ref:ugarte1992curling}
 \printinterimbibliography
 \end{document}
